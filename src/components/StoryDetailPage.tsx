@@ -9,7 +9,7 @@ interface StoryDetailPageProps {
   onNavigate: (page: string) => void;
 }
 
-export function StoryDetailPage({ storyId, onNavigate }: StoryDetailPageProps) {
+export function StoryDetailPage({ storyId, onNavigate, onOpenContact }: StoryDetailPageProps & { onOpenContact?: () => void }) {
   const { getApprovedStories } = useAuth();
   const { t } = useLanguage();
   const translatedStories = useTranslatedStories(getApprovedStories());
@@ -168,7 +168,13 @@ export function StoryDetailPage({ storyId, onNavigate }: StoryDetailPageProps) {
                 {t('story.share.message')}
               </p>
               <button
-                onClick={() => onNavigate('dashboard')}
+                onClick={() => {
+                  if (onOpenContact) {
+                    onOpenContact();
+                  } else {
+                    onNavigate('contact');
+                  }
+                }}
                 className="bg-accent text-white px-8 py-3 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300 uppercase tracking-wider font-bold"
               >
                 {t('story.share.story')}

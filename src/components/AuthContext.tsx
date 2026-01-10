@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     
     // Version control for stories - force update if version changed
-    const currentVersion = '2.0';
+    const currentVersion = '2.2';
     if (savedStories && storiesVersion === currentVersion) {
       setStories(JSON.parse(savedStories));
     } else {
@@ -176,7 +176,8 @@ Sadece varım. Tanımlanamaz ama gerçek.`,
           status: 'approved',
           createdAt: new Date('2024-03-01').toISOString(),
           approvedAt: new Date('2024-03-02').toISOString(),
-          videoUrl: 'https://www.youtube.com/embed/videoseries?list=PLrAXtmErZgOeiKm4sgNOknGvNjby9efdf',
+          // Athena – Ben Böyleyim (official video ID)
+          videoUrl: 'https://www.youtube.com/embed/xXJmbuppQxw',
           mediaType: 'video',
         },
         {

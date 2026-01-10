@@ -48,15 +48,20 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-6">
-            {menuItems.map((item) => (
-              <button
-                key={item.value}
-                onClick={() => onNavigate(item.value)}
-                className="text-sm uppercase tracking-wider text-white hover:text-accent transition-colors font-semibold"
-              >
-                {item.label}
-              </button>
-            ))}
+            {menuItems.map((item) => {
+              const labelText = language === 'tr'
+                ? (item.label || '').toLocaleUpperCase('tr-TR')
+                : item.label;
+              return (
+                <button
+                  key={item.value}
+                  onClick={() => onNavigate(item.value)}
+                  className="text-sm uppercase tracking-wider text-white hover:text-accent transition-colors font-semibold"
+                >
+                  {labelText}
+                </button>
+              );
+            })}
             
             {/* Share Your Story CTA */}
             <button
@@ -73,7 +78,7 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
               className="flex items-center gap-2 bg-accent text-white px-4 py-2 border-2 border-accent hover:bg-transparent hover:text-accent transition-all font-bold uppercase tracking-wide text-sm"
             >
               <PenLine size={16} />
-              {t('nav.shareStory')}
+              {language === 'tr' ? t('nav.shareStory').toLocaleUpperCase('tr-TR') : t('nav.shareStory')}
             </button>
             
             {/* Language Switcher */}
@@ -100,22 +105,27 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
         {/* Mobile Menu */}
         {isMenuOpen && (
           <nav className="md:hidden pb-4 flex flex-col gap-3 border-t-2 border-white/20 pt-4 mt-2">
-            {menuItems.map((item) => (
-              <button
-                key={item.value}
-                onClick={() => {
-                  onNavigate(item.value);
-                  setIsMenuOpen(false);
-                }}
-                className={`text-left text-sm font-semibold uppercase tracking-wider transition-colors py-2 ${
-                  currentPage === item.value
-                    ? 'text-accent'
-                    : 'text-white hover:text-accent'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
+            {menuItems.map((item) => {
+              const labelText = language === 'tr'
+                ? (item.label || '').toLocaleUpperCase('tr-TR')
+                : item.label;
+              return (
+                <button
+                  key={item.value}
+                  onClick={() => {
+                    onNavigate(item.value);
+                    setIsMenuOpen(false);
+                  }}
+                  className={`text-left text-sm font-semibold uppercase tracking-wider transition-colors py-2 ${
+                    currentPage === item.value
+                      ? 'text-accent'
+                      : 'text-white hover:text-accent'
+                  }`}
+                >
+                  {labelText}
+                </button>
+              );
+            })}
             
             {/* Mobile Share Your Story CTA */}
             <button
@@ -132,7 +142,7 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
               className="flex items-center gap-2 bg-accent text-white px-4 py-3 border-2 border-accent hover:bg-transparent hover:text-accent transition-all justify-center mt-2"
             >
               <PenLine size={18} />
-              <span className="text-sm uppercase tracking-wider font-semibold">{t('nav.shareStory')}</span>
+              <span className="text-sm uppercase tracking-wider font-semibold">{language === 'tr' ? t('nav.shareStory').toLocaleUpperCase('tr-TR') : t('nav.shareStory')}</span>
             </button>
             
             {/* Mobile Language Switcher */}

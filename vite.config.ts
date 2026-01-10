@@ -1,11 +1,13 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import path from 'path';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import path from 'path'
 
+// IMPORTANT: replace "SADECEVARIM" with your repository name if different.
+// For a GitHub Pages repo site use base: '/REPO_NAME/'. For a user/org site, use '/'.
 export default defineConfig({
+  // Use root base during development for local previews, keep GitHub Pages base for production builds
+  base: process.env.NODE_ENV === 'development' ? '/' : '/SADECEVARIM/',
   plugins: [react()],
-  // Sitenin alt klasörde çalışması için gerekli ayar:
-  base: "/SADECEVARIM/", 
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
@@ -52,10 +54,10 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    outDir: 'dist', // GitHub Actions ile uyumlu olması için 'dist' yaptık
+    outDir: 'dist',
   },
   server: {
-    port: 3000,
+    port: 5173,
     open: true,
   },
-});
+})

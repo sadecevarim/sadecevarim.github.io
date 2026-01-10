@@ -17,26 +17,26 @@ interface HomePageProps {
 
 export function HomePage({ onNavigate, onOpenContact }: HomePageProps) {
   const { t } = useLanguage();
-  
+
   const articles: Article[] = [
     {
       id: 1,
-      title: 'Sessizliğin Gücü',
-      snippet: 'Meydan okuyan, karşı duran, sessiz ama keskin varoluş. Ses çıkarmadan bile var olmak bir duruştur.',
+      title: t('home.articles.card1.title'),
+      snippet: t('home.articles.card1.snippet'),
       image: 'https://images.unsplash.com/photo-1574800158612-0467d582e440?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwYmxhY2slMjB3aGl0ZXxlbnwxfHx8fDE3Njc4NzE3NTN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
       category: t('home.articles.category1'),
     },
     {
       id: 2,
-      title: 'Karşı Duruş',
-      snippet: 'Görünmezliğin içinde bile bir varlık, bir iz bırakmak. Bizim hikayemiz bu.',
+      title: t('home.articles.card2.title'),
+      snippet: t('home.articles.card2.snippet'),
       image: 'https://images.unsplash.com/photo-1558522195-e1201b090344?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcnR8ZW58MXx8fHwxNzY3ODgwMDY5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
       category: t('home.articles.category2'),
     },
     {
       id: 3,
-      title: 'Varoluş Manifestosu',
-      snippet: 'Her nefes bir isyan, her adım bir devrim. Sadece varız, yetmez mi?',
+      title: t('home.articles.card3.title'),
+      snippet: t('home.articles.card3.snippet'),
       image: 'https://images.unsplash.com/photo-1548566862-2c9b1fed780a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1cmJhbiUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3Njc4NzQ4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
       category: t('home.articles.category3'),
     },
@@ -87,7 +87,7 @@ export function HomePage({ onNavigate, onOpenContact }: HomePageProps) {
           </div>
         </div>
       </section>
-
+      
       {/* Concept Section */}
       <section className="py-16 md:py-20 bg-gradient-to-b from-primary via-[#0d0d0d] to-background text-white">
         <div className="container mx-auto px-4 md:px-6">
