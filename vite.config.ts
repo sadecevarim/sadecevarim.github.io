@@ -5,8 +5,8 @@ import path from 'path'
 // IMPORTANT: replace "SADECEVARIM" with your repository name if different.
 // For a GitHub Pages repo site use base: '/REPO_NAME/'. For a user/org site, use '/'.
 export default defineConfig({
-  // Use root base during development for local previews, keep GitHub Pages base for production builds
-  base: process.env.NODE_ENV === 'development' ? '/' : '/SADECEVARIM/',
+  // Root base for both dev and production (user/org GitHub Pages site)
+  base: '/',
   plugins: [react()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
