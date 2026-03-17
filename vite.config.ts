@@ -2,11 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 
-// IMPORTANT: replace "SADECEVARIM" with your repository name if different.
-// For a GitHub Pages repo site use base: '/REPO_NAME/'. For a user/org site, use '/'.
+// Configured for GitHub Pages user/org site at sadecevarim.github.io (base: '/').
 export default defineConfig({
-  // Use root base during development for local previews, keep GitHub Pages base for production builds
-  base: process.env.NODE_ENV === 'development' ? '/' : '/SADECEVARIM/',
+  // Use root base for both development and production (user/org GitHub Pages site)
+  base: '/',
   plugins: [react()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],

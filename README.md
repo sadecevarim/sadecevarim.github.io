@@ -43,10 +43,10 @@
 
   ## GitHub Pages
 
-  Live: https://umutkabakci.github.io/SADECEVARIM/
+  Live: https://sadecevarim.github.io/
 
-  This project is configured for a repo page at `/SADECEVARIM/` via `vite.config.ts`.
-  Push to `main` to trigger the deploy workflow which will publish to GitHub Pages (`gh-pages` branch).
+  This project is configured for a user/org site at `/` via `vite.config.ts`.
+  Push to `main` to trigger the deploy workflow which will publish to GitHub Pages.
 
   Manual deploy (optional):
 
