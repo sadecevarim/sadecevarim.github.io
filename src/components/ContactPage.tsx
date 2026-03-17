@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Send, Mail, User, MessageSquare, BookOpen, HelpCircle, Lightbulb, MessageCircle, FileText, Image as ImageIcon, Video } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
+import { getSiteContent } from '../config/siteContent';
 
 interface ContactPageProps {
   onNavigate: (page: string) => void;
@@ -10,7 +11,8 @@ type ContactType = 'story' | 'question' | 'suggestion' | 'feedback';
 type MediaType = 'text' | 'image' | 'video';
 
 export function ContactPage({ onNavigate }: ContactPageProps) {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const content = getSiteContent(language).iletisim;
   const [contactType, setContactType] = useState<ContactType>('story'); // Default to story
   const [mediaType, setMediaType] = useState<MediaType>('text'); // Default to text
   const [formData, setFormData] = useState({
@@ -42,8 +44,8 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
       // Set appropriate success message based on contact type
       const message = contactType === 'story' 
-        ? t('contact.success.story')
-        : t('contact.success');
+        ? content.successStory
+        : content.success;
       setSuccessMessage(message);
       
       setFormData({
@@ -66,10 +68,10 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
       <div className="bg-primary border-b-2 border-primary py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold text-accent text-center mb-6">
-            {t('contact.title')}
+            {content.title}
           </h1>
           <p className="text-white/80 text-center max-w-2xl mx-auto leading-relaxed">
-            {t('contact.subtitle')}
+            {content.subtitle}
           </p>
           <div className="w-24 h-1 bg-accent mx-auto mt-6" />
         </div>
@@ -90,24 +92,24 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
             <div className="grid md:grid-cols-2 gap-6 mb-12">
               <div className="bg-muted border-2 border-primary p-6 text-center">
                 <Mail size={32} className="mx-auto mb-3 text-accent" />
-                <h3 className="font-bold uppercase tracking-wide mb-2">{t('contact.email')}</h3>
+                <h3 className="font-bold uppercase tracking-wide mb-2">{content.email}</h3>
                 <p className="text-sm text-muted-foreground">info@sadecevarim.com</p>
               </div>
               <div className="bg-muted border-2 border-primary p-6 text-center">
                 <MessageSquare size={32} className="mx-auto mb-3 text-accent" />
-                <h3 className="font-bold uppercase tracking-wide mb-2">{t('contact.support')}</h3>
-                <p className="text-sm text-muted-foreground">{t('contact.support.desc')}</p>
+                <h3 className="font-bold uppercase tracking-wide mb-2">{content.support}</h3>
+                <p className="text-sm text-muted-foreground">{content.supportDesc}</p>
               </div>
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="bg-white border-2 border-primary p-8">
-              <h2 className="text-2xl font-bold mb-6 uppercase">{t('contact.form.title')}</h2>
+              <h2 className="text-2xl font-bold mb-6 uppercase">{content.form.title}</h2>
 
               {/* Contact Type Selector */}
               <div className="mb-8">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-4">
-                  {t('contact.form.type')}
+                  {content.form.type}
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <button
@@ -121,7 +123,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   >
                     <BookOpen size={24} className={`mx-auto mb-2 ${contactType === 'story' ? 'text-white' : 'text-accent'}`} />
                     <span className="text-xs font-bold uppercase tracking-wide block">
-                      {t('contact.form.type.story').replace('📖 ', '')}
+                      {content.form.typeStory}
                     </span>
                   </button>
                   <button
@@ -135,7 +137,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   >
                     <HelpCircle size={24} className={`mx-auto mb-2 ${contactType === 'question' ? 'text-white' : 'text-accent'}`} />
                     <span className="text-xs font-bold uppercase tracking-wide block">
-                      {t('contact.form.type.question').replace('❓ ', '')}
+                      {content.form.typeQuestion}
                     </span>
                   </button>
                   <button
@@ -149,7 +151,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   >
                     <Lightbulb size={24} className={`mx-auto mb-2 ${contactType === 'suggestion' ? 'text-white' : 'text-accent'}`} />
                     <span className="text-xs font-bold uppercase tracking-wide block">
-                      {t('contact.form.type.suggestion').replace('💡 ', '')}
+                      {content.form.typeSuggestion}
                     </span>
                   </button>
                   <button
@@ -163,7 +165,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   >
                     <MessageCircle size={24} className={`mx-auto mb-2 ${contactType === 'feedback' ? 'text-white' : 'text-accent'}`} />
                     <span className="text-xs font-bold uppercase tracking-wide block">
-                      {t('contact.form.type.feedback').replace('💬 ', '')}
+                      {content.form.typeFeedback}
                     </span>
                   </button>
                 </div>
@@ -171,7 +173,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
               <div className="mb-4">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  {t('contact.form.name')}
+                  {content.form.name}
                   {contactType === 'story' && <span className="text-muted-foreground text-xs ml-2 normal-case">(opsiyonel)</span>}
                 </label>
                 <div className="relative">
@@ -180,7 +182,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full pl-12 pr-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                    placeholder={contactType === 'story' ? t('contact.form.name.placeholder.story') : t('contact.form.name.placeholder')}
+                    placeholder={contactType === 'story' ? content.form.namePlaceholderStory : content.form.namePlaceholder}
                     required={contactType !== 'story'}
                   />
                   <User size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -189,7 +191,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
               <div className="mb-4">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  {t('contact.form.email')}
+                  {content.form.email}
                 </label>
                 <div className="relative">
                   <input
@@ -197,7 +199,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full pl-12 pr-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                    placeholder={t('contact.form.email.placeholder')}
+                    placeholder={content.form.emailPlaceholder}
                     required
                   />
                   <Mail size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -206,14 +208,14 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
               <div className="mb-4">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  {t('contact.form.subject')}
+                  {content.form.subject}
                 </label>
                 <input
                   type="text"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                  placeholder={contactType === 'story' ? t('contact.form.subject.placeholder.story') : t('contact.form.subject.placeholder')}
+                  placeholder={contactType === 'story' ? content.form.subjectPlaceholderStory : content.form.subjectPlaceholder}
                   required
                 />
               </div>
@@ -222,7 +224,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               {contactType === 'story' && (
                 <div className="mb-8">
                   <label className="block text-sm font-semibold uppercase tracking-wide mb-4">
-                    {t('contact.form.mediaType')}
+                    {content.form.mediaType}
                   </label>
                   <div className="grid grid-cols-3 gap-3">
                     <button
@@ -236,7 +238,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     >
                       <FileText size={24} className={`mx-auto mb-2 ${mediaType === 'text' ? 'text-white' : 'text-accent'}`} />
                       <span className="text-xs font-bold uppercase tracking-wide block">
-                        {t('contact.form.mediaType.text').replace('📝 ', '')}
+                        {content.form.mediaText}
                       </span>
                     </button>
                     <button
@@ -250,7 +252,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     >
                       <ImageIcon size={24} className={`mx-auto mb-2 ${mediaType === 'image' ? 'text-white' : 'text-accent'}`} />
                       <span className="text-xs font-bold uppercase tracking-wide block">
-                        {t('contact.form.mediaType.image').replace('🖼️ ', '')}
+                        {content.form.mediaImage}
                       </span>
                     </button>
                     <button
@@ -264,7 +266,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     >
                       <Video size={24} className={`mx-auto mb-2 ${mediaType === 'video' ? 'text-white' : 'text-accent'}`} />
                       <span className="text-xs font-bold uppercase tracking-wide block">
-                        {t('contact.form.mediaType.video').replace('🎥 ', '')}
+                        {content.form.mediaVideo}
                       </span>
                     </button>
                   </div>
@@ -275,14 +277,14 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
               {contactType === 'story' && (mediaType === 'image' || mediaType === 'video') && (
                 <div className="mb-6">
                   <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                    {t('contact.form.mediaUrl')}
+                    {content.form.mediaUrl}
                   </label>
                   <input
                     type="url"
                     value={formData.mediaUrl}
                     onChange={(e) => setFormData({ ...formData, mediaUrl: e.target.value })}
                     className="w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                    placeholder={t('contact.form.mediaUrl.placeholder')}
+                    placeholder={content.form.mediaUrlPlaceholder}
                   />
                   <p className="text-xs text-muted-foreground mt-2 italic">
                     {mediaType === 'video' 
@@ -294,7 +296,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
 
               <div className="mb-6">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  {t('contact.form.message')}
+                  {content.form.message}
                 </label>
                 <textarea
                   value={formData.message}
@@ -302,12 +304,12 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                   className={`w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors resize-y ${
                     contactType === 'story' ? 'min-h-[300px]' : 'min-h-[200px]'
                   }`}
-                  placeholder={contactType === 'story' ? t('contact.form.message.placeholder.story') : t('contact.form.message.placeholder')}
+                  placeholder={contactType === 'story' ? content.form.messagePlaceholderStory : content.form.messagePlaceholder}
                   required
                 />
                 {contactType === 'story' && (
                   <p className="text-xs text-muted-foreground mt-2 italic">
-                    {t('contact.form.message.story.help')}
+                    {content.form.messageStoryHelp}
                   </p>
                 )}
               </div>
@@ -318,11 +320,11 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                 className="w-full flex items-center justify-center gap-2 bg-accent text-white py-4 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300 uppercase tracking-wider font-bold disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
-                  t('contact.form.submitting')
+                  content.form.submitting
                 ) : (
                   <>
                     <Send size={20} />
-                    {contactType === 'story' ? t('contact.form.submit.story') : t('contact.form.submit')}
+                        {contactType === 'story' ? content.form.submitStory : content.form.submit}
                   </>
                 )}
               </button>
@@ -331,13 +333,13 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
             {/* Additional Info */}
             <div className="mt-12 p-8 bg-secondary border-2 border-primary text-center">
               <h3 className="text-2xl font-bold text-white mb-4 uppercase">
-                {t('contact.footer.title')}
+                {content.footer.title}
               </h3>
               <p className="text-white/80 mb-6">
-                {t('contact.footer.desc')}
+                {content.footer.desc}
               </p>
               <p className="text-accent font-semibold uppercase tracking-wide">
-                {t('contact.footer.tagline')}
+                {content.footer.tagline}
               </p>
             </div>
           </div>

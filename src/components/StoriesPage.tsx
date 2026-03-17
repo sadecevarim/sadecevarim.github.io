@@ -1,7 +1,9 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { DataDripScroller } from './DataDripScroller';
 import { ArrowRight, User, Play } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { useLanguage } from './LanguageContext';
+import { getSiteContent } from '../config/siteContent';
 import { useTranslatedStories } from './useTranslatedStories';
 import { useState } from 'react';
 
@@ -11,7 +13,8 @@ interface StoriesPageProps {
 
 export function StoriesPage({ onNavigate }: StoriesPageProps) {
   const { getApprovedStories } = useAuth();
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const content = getSiteContent(language).hikayeler;
   const rawApprovedStories = getApprovedStories();
   const approvedStories = useTranslatedStories(rawApprovedStories);
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'text' | 'visual' | 'video'>('all');
@@ -35,17 +38,20 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-accent text-center mb-6 tracking-tight leading-none">
-            {t('stories.title')}
+            {content.title}
           </h1>
           <p className="text-white/90 text-lg md:text-xl text-center max-w-3xl mx-auto leading-relaxed mb-8">
-            {t('stories.subtitle')}
+            {content.subtitle}
           </p>
           <div className="w-32 h-1 bg-accent mx-auto" />
         </div>
+
+        {/* Data Drip Scroller */}
+        <DataDripScroller />
       </div>
 
       {/* Filter Tabs */}
-      <div className="sticky top-20 z-40 bg-primary/95 backdrop-blur-sm border-y-2 border-accent/50 py-4">
+      <div className="relative z-10 bg-primary/95 backdrop-blur-sm border-y-2 border-accent/50 py-4 md:sticky md:top-20 md:z-40">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <button
@@ -56,7 +62,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                   : 'bg-transparent text-white border-white/30 hover:border-accent hover:text-accent'
               }`}
             >
-              {t('stories.filter.all')}
+              {content.filters.all}
             </button>
             <button
               onClick={() => setSelectedFilter('text')}
@@ -66,7 +72,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                   : 'bg-transparent text-white border-white/30 hover:border-accent hover:text-accent'
               }`}
             >
-              {t('stories.filter.text')}
+              {content.filters.text}
             </button>
             <button
               onClick={() => setSelectedFilter('visual')}
@@ -76,7 +82,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                   : 'bg-transparent text-white border-white/30 hover:border-accent hover:text-accent'
               }`}
             >
-              {t('stories.filter.visual')}
+              {content.filters.visual}
             </button>
             <button
               onClick={() => setSelectedFilter('video')}
@@ -86,7 +92,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                   : 'bg-transparent text-white border-white/30 hover:border-accent hover:text-accent'
               }`}
             >
-              {t('stories.filter.video')}
+              {content.filters.video}
             </button>
           </div>
         </div>
@@ -98,16 +104,16 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
           {approvedStories.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-2xl font-bold text-muted-foreground uppercase tracking-wide mb-4">
-                {t('stories.empty')}
+                {content.emptyTitle}
               </p>
               <p className="text-muted-foreground mb-8">
-                {t('stories.empty')}
+                {content.emptyText}
               </p>
               <button
-                onClick={() => onNavigate('dashboard')}
+                onClick={() => onNavigate('contact')}
                 className="inline-flex items-center gap-2 bg-accent text-white px-8 py-4 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300"
               >
-                <span className="uppercase tracking-wider font-bold">{t('nav.join')}</span>
+                <span className="uppercase tracking-wider font-bold">{content.emptyButton}</span>
                 <ArrowRight size={20} />
               </button>
             </div>
@@ -148,7 +154,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                       {/* Author Badge */}
                       <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm px-3 py-1 border-2 border-white/50">
                         <p className="text-white text-xs font-bold uppercase tracking-wider">
-                          {story.isAnonymous ? t('stories.anonymous') : story.authorName}
+                          {story.isAnonymous ? content.anonymous : story.authorName}
                         </p>
                       </div>
 
@@ -160,11 +166,11 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                           </div>
                         ) : displayMediaType === 'image' ? (
                           <div className="bg-primary/80 backdrop-blur-sm px-3 py-1 border-2 border-white/50">
-                            <span className="text-white text-xs font-bold uppercase">{t('stories.visual.badge')}</span>
+                            <span className="text-white text-xs font-bold uppercase">{content.badges.visual}</span>
                           </div>
                         ) : (
                           <div className="bg-primary/80 backdrop-blur-sm px-3 py-1 border-2 border-white/50">
-                            <span className="text-white text-xs font-bold uppercase">{t('stories.text.badge')}</span>
+                            <span className="text-white text-xs font-bold uppercase">{content.badges.text}</span>
                           </div>
                         )}
                       </div>
@@ -191,7 +197,7 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
                           })}
                         </span>
                         <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-primary group-hover:text-accent transition-colors">
-                          <span>{t('stories.read')}</span>
+                          <span>{content.read}</span>
                           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
@@ -209,16 +215,16 @@ export function StoriesPage({ onNavigate }: StoriesPageProps) {
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold text-accent mb-6 uppercase tracking-tight">
-              {t('stories.cta.title')}
+              {content.cta.title}
             </h2>
             <p className="text-white/90 text-base md:text-lg mb-8 leading-relaxed">
-              {t('stories.cta.text')}
+              {content.cta.text}
             </p>
             <button
-              onClick={() => onNavigate('dashboard')}
+              onClick={() => onNavigate('contact')}
               className="bg-accent text-white px-10 py-4 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300 uppercase tracking-wider font-bold text-lg"
             >
-              {t('stories.cta.button')}
+              {content.cta.button}
             </button>
           </div>
         </div>

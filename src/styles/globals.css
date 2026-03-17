@@ -1,6 +1,6 @@
 @custom-variant dark (&:is(.dark *));
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Oswald:wght@400;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root {
   --font-size: 16px;
@@ -29,8 +29,10 @@
   --ring: #000000;
   --radius: 0px;
   
-  /* Moodboard Typography */
-  --font-heading: 'Bebas Neue', 'Oswald', sans-serif;
+  /* Improved Typography with Full Turkish Character Support */
+  /* Bebas Neue for headings, with Space Mono as fallback for better character rendering */
+  --font-heading: 'Space Mono', 'Bebas Neue', 'Oswald', sans-serif;
+  /* Inter and Montserrat have excellent Turkish character support */
   --font-body: 'Inter', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 

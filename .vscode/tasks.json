@@ -11,6 +11,12 @@
         "reveal": "always",
         "panel": "shared"
       }
+    },
+    {
+      "type": "Live Preview",
+      "workspacePath": "c:\\Users\\Umut\\Desktop\\3. sınıf dersler\\NMED 4201-YENI MEDYA BITIRME PROJESI\\github page",
+      "problemMatcher": [],
+      "label": "Live Preview: Run Server"
     }
   ]
 }

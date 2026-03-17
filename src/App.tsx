@@ -3,18 +3,20 @@ import { AuthProvider } from './components/AuthContext';
 import { LanguageProvider, useLanguage } from './components/LanguageContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { CodeRainMargins } from './components/CodeRainMargins';
 import { HomePage } from './components/HomePage';
 import { ArticlePage } from './components/ArticlePage';
 import { CategoryPage } from './components/CategoryPage';
-import { GalleryPage } from './components/GalleryPage';
+import { AboutPage } from './components/AboutPage';
+import { WorksPage } from './components/WorksPage';
 import { StoriesPage } from './components/StoriesPage';
 import { StoryDetailPage } from './components/StoryDetailPage';
-import { UserDashboard } from './components/UserDashboard';
+
 import { AdminPanel } from './components/AdminPanel';
 import { ContactPage } from './components/ContactPage';
 import { AuthModal } from './components/AuthModal';
 
-type PageType = 'home' | 'article' | 'categories' | 'gallery' | 'stories' | 'story-detail' | 'dashboard' | 'admin' | 'contact';
+type PageType = 'home' | 'article' | 'categories' | 'works' | 'about' | 'stories' | 'story-detail' | 'admin' | 'contact';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -40,6 +42,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col" lang={language}>
+      <CodeRainMargins key={currentPage} />
       <Header 
         onNavigate={handleNavigate} 
         currentPage={currentPage}
@@ -59,17 +62,17 @@ function AppContent() {
         {currentPage === 'categories' && (
           <CategoryPage onNavigate={handleNavigate} />
         )}
-        {currentPage === 'gallery' && (
-          <GalleryPage onNavigate={handleNavigate} />
+        {currentPage === 'works' && (
+          <WorksPage onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'about' && (
+          <AboutPage onNavigate={handleNavigate} />
         )}
         {currentPage === 'stories' && (
           <StoriesPage onNavigate={handleNavigate} />
         )}
         {currentPage === 'story-detail' && (
           <StoryDetailPage storyId={selectedStoryId} onNavigate={handleNavigate} />
-        )}
-        {currentPage === 'dashboard' && (
-          <UserDashboard onNavigate={handleNavigate} />
         )}
         {currentPage === 'admin' && (
           <AdminPanel onNavigate={handleNavigate} />

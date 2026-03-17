@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from './AuthContext';
+import { useLanguage } from './LanguageContext';
+import { getSiteContent } from '../config/siteContent';
 import { Plus, FileText, Clock, CheckCircle, XCircle, Pencil } from 'lucide-react';
 
 interface UserDashboardProps {
@@ -8,6 +10,8 @@ interface UserDashboardProps {
 
 export function UserDashboard({ onNavigate }: UserDashboardProps) {
   const { user, getUserStories, submitStory } = useAuth();
+  const { language } = useLanguage();
+  const content = getSiteContent(language).hikayeniPaylas;
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -33,7 +37,7 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
         authorName: formData.isAnonymous ? undefined : formData.authorName || user?.username,
       });
 
-      setSuccessMessage('Hikayen başarıyla gönderildi! Onay bekliyor.');
+      setSuccessMessage(content.success);
       setFormData({
         title: '',
         content: '',
@@ -67,11 +71,11 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'Onay Bekliyor';
+        return content.status.pending;
       case 'approved':
-        return 'Onaylandı';
+        return content.status.approved;
       case 'rejected':
-        return 'Reddedildi';
+        return content.status.rejected;
       default:
         return status;
     }
@@ -83,10 +87,10 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Merhaba, {user?.username}
+            {content.greeting}, {user?.username}
           </h1>
           <p className="text-muted-foreground">
-            Senin hikayelerini buradan yönetebilirsin
+            {content.intro}
           </p>
         </div>
 
@@ -104,7 +108,7 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
             className="mb-8 inline-flex items-center gap-2 bg-accent text-white px-6 py-3 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300"
           >
             <Plus size={20} />
-            <span className="uppercase tracking-wider font-bold">Yeni Hikaye Paylaş</span>
+            <span className="uppercase tracking-wider font-bold">{content.newStory}</span>
           </button>
         )}
 
@@ -112,43 +116,43 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
         {showForm && (
           <div className="mb-8 bg-muted border-2 border-primary p-6 md:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold uppercase">Hikayeni Paylaş</h2>
+              <h2 className="text-2xl font-bold uppercase">{content.newStory}</h2>
               <button
                 onClick={() => setShowForm(false)}
                 className="text-muted-foreground hover:text-accent transition-colors"
               >
-                İptal
+                {content.form.cancel}
               </button>
             </div>
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  Başlık
+                  {content.form.titleLabel}
                 </label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                  placeholder="Hikayenin başlığı"
+                  placeholder={content.form.titlePlaceholder}
                   required
                 />
               </div>
 
               <div className="mb-4">
                 <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  Hikaye
+                  {content.form.storyLabel}
                 </label>
                 <textarea
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   className="w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors min-h-[200px] resize-y"
-                  placeholder="Hikayeni buraya yaz..."
+                  placeholder={content.form.storyPlaceholder}
                   required
                 />
                 <p className="mt-2 text-xs text-muted-foreground uppercase tracking-wide">
-                  Hikayenin {formData.content.length} karakter
+                  {content.form.characters} {formData.content.length}
                 </p>
               </div>
 
@@ -163,28 +167,28 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
                     className="w-5 h-5 border-2 border-primary accent-accent"
                   />
                   <span className="text-sm font-semibold uppercase tracking-wide">
-                    Anonim olarak paylaş
+                    {content.form.anonymousLabel}
                   </span>
                 </label>
                 <p className="mt-2 ml-8 text-xs text-muted-foreground">
-                  Anonim paylaşımlarda ismin görünmez
+                  {content.form.anonymousHelp}
                 </p>
               </div>
 
               {!formData.isAnonymous && (
                 <div className="mb-6">
                   <label className="block text-sm font-semibold uppercase tracking-wide mb-2">
-                    Yazar Adı (Opsiyonel)
+                    {content.form.authorLabel}
                   </label>
                   <input
                     type="text"
                     value={formData.authorName}
                     onChange={(e) => setFormData({ ...formData, authorName: e.target.value })}
                     className="w-full px-4 py-3 border-2 border-primary focus:border-accent outline-none transition-colors"
-                    placeholder={user?.username || 'İsmini yaz'}
+                    placeholder={user?.username || content.form.authorPlaceholder}
                   />
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Boş bırakırsan kullanıcı adın görünür
+                    {content.form.authorHelp}
                   </p>
                 </div>
               )}
@@ -194,7 +198,7 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
                 disabled={isSubmitting}
                 className="w-full bg-accent text-white py-3 border-2 border-accent hover:bg-transparent hover:text-accent transition-all duration-300 uppercase tracking-wider font-bold disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Gönderiliyor...' : 'Hikayeyi Gönder'}
+                {isSubmitting ? content.form.submitting : content.form.submit}
               </button>
             </form>
           </div>
@@ -204,17 +208,17 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
         <div>
           <h2 className="text-2xl font-bold mb-6 uppercase flex items-center gap-3">
             <FileText size={24} />
-            Hikayelerim ({myStories.length})
+            {content.stories.title} ({myStories.length})
           </h2>
 
           {myStories.length === 0 ? (
             <div className="text-center py-12 bg-muted border-2 border-primary">
               <Pencil size={48} className="mx-auto mb-4 text-muted-foreground" />
               <p className="text-lg font-semibold uppercase tracking-wide text-muted-foreground">
-                Henüz hikaye paylaşmadın
+                {content.stories.emptyTitle}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
-                İlk hikayeni paylaş ve sesi duyulsun
+                {content.stories.emptyText}
               </p>
             </div>
           ) : (
@@ -247,9 +251,9 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
                         })}
                       </span>
                       {story.isAnonymous ? (
-                        <span className="text-accent font-semibold">Anonim</span>
+                        <span className="text-accent font-semibold">{content.stories.anonymous}</span>
                       ) : (
-                        <span>Yazar: {story.authorName || user?.username}</span>
+                        <span>{content.stories.authorPrefix} {story.authorName || user?.username}</span>
                       )}
                     </div>
                   </div>

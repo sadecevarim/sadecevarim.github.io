@@ -1,6 +1,7 @@
 import { Menu, User, LogOut, Globe, PenLine } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from './LanguageContext';
+import { getSiteContent } from '../config/siteContent';
 
 interface HeaderProps {
   currentPage: string;
@@ -10,23 +11,25 @@ interface HeaderProps {
 
 export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const content = getSiteContent(language).anaSayfa;
 
   const toggleLanguage = () => {
     setLanguage(language === 'tr' ? 'en' : 'tr');
   };
 
   // Logo text based on current language
-  const logoText = language === 'tr' ? 'SADECE VARIM' : 'I JUST EXIST';
+  const logoText = content.logoText;
   
   // Button shows CURRENT language (not the target)
   const languageButtonText = language === 'tr' ? 'TR' : 'EN';
 
   const menuItems = [
-    { label: t('nav.home'), value: 'home' },
-    { label: t('nav.stories'), value: 'stories' },
-    { label: t('nav.about'), value: 'gallery' },
-    { label: t('nav.contact'), value: 'contact' },
+    { label: content.nav.home, value: 'home' },
+    { label: content.nav.stories, value: 'stories' },
+    { label: content.nav.works, value: 'works' },
+    { label: content.nav.about, value: 'about' },
+    { label: content.nav.contact, value: 'contact' },
   ];
 
   const handleLogout = () => {
@@ -78,7 +81,7 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
               className="flex items-center gap-2 bg-accent text-white px-4 py-2 border-2 border-accent hover:bg-transparent hover:text-accent transition-all font-bold uppercase tracking-wide text-sm"
             >
               <PenLine size={16} />
-              {language === 'tr' ? t('nav.shareStory').toLocaleUpperCase('tr-TR') : t('nav.shareStory')}
+              {content.nav.shareStory.toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}
             </button>
             
             {/* Language Switcher */}
@@ -142,7 +145,7 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
               className="flex items-center gap-2 bg-accent text-white px-4 py-3 border-2 border-accent hover:bg-transparent hover:text-accent transition-all justify-center mt-2"
             >
               <PenLine size={18} />
-              <span className="text-sm uppercase tracking-wider font-semibold">{language === 'tr' ? t('nav.shareStory').toLocaleUpperCase('tr-TR') : t('nav.shareStory')}</span>
+              <span className="text-sm uppercase tracking-wider font-semibold">{content.nav.shareStory.toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</span>
             </button>
             
             {/* Mobile Language Switcher */}
@@ -152,7 +155,7 @@ export function Header({ currentPage, onNavigate, onOpenContact }: HeaderProps) 
             >
               <Globe size={16} />
               <span className="text-sm uppercase tracking-wider font-semibold">
-                {language === 'tr' ? 'Switch to English' : 'Türkçe\'ye Geç'}
+                {language === 'tr' ? content.nav.switchToEnglish : content.nav.switchToTurkish}
               </span>
             </button>
           </nav>

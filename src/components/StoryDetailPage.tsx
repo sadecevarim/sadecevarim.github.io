@@ -6,7 +6,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface StoryDetailPageProps {
   storyId: string;
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, storyId?: string) => void;
 }
 
 export function StoryDetailPage({ storyId, onNavigate, onOpenContact }: StoryDetailPageProps & { onOpenContact?: () => void }) {
@@ -14,6 +14,19 @@ export function StoryDetailPage({ storyId, onNavigate, onOpenContact }: StoryDet
   const { t } = useLanguage();
   const translatedStories = useTranslatedStories(getApprovedStories());
   const story = translatedStories.find((s) => s.id === storyId);
+  const orderedStories = [...translatedStories].sort((a, b) => {
+    const dateA = a.approvedAt ? new Date(a.approvedAt).getTime() : new Date(a.createdAt).getTime();
+    const dateB = b.approvedAt ? new Date(b.approvedAt).getTime() : new Date(b.createdAt).getTime();
+    return dateB - dateA;
+  });
+  const storyIndex = orderedStories.findIndex((s) => s.id === storyId);
+  const hasNav = orderedStories.length > 1 && storyIndex >= 0;
+  const prevStory = hasNav
+    ? orderedStories[(storyIndex - 1 + orderedStories.length) % orderedStories.length]
+    : undefined;
+  const nextStory = hasNav
+    ? orderedStories[(storyIndex + 1) % orderedStories.length]
+    : undefined;
 
   if (!story) {
     return (
@@ -88,8 +101,28 @@ export function StoryDetailPage({ storyId, onNavigate, onOpenContact }: StoryDet
         </div>
       </div>
 
+      {/* Bottom Navigation (Prev/Next) */}
+      {hasNav && prevStory && nextStory && (
+        <div className="fixed bottom-0 left-0 right-0 z-40 border-t-2 border-primary bg-background">
+          <div className="container mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
+            <button
+              onClick={() => onNavigate('story-detail', prevStory.id)}
+              className="px-3 py-3 border-2 border-primary text-xs font-semibold uppercase tracking-wider bg-background hover:bg-primary hover:text-white transition-colors"
+            >
+              {t('story.prev')}
+            </button>
+            <button
+              onClick={() => onNavigate('story-detail', nextStory.id)}
+              className="px-3 py-3 border-2 border-primary text-xs font-semibold uppercase tracking-wider bg-background hover:bg-accent hover:text-white hover:border-accent transition-colors"
+            >
+              {t('story.next')}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Story Content */}
-      <article className="py-12 md:py-16">
+      <article className="pt-12 pb-24 md:pt-16 md:pb-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
             

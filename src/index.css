@@ -2377,3 +2377,41 @@ html {
     transform: none;
   }
 }
+/* Data Drip Scroller - Cyberpunk Aesthetic */
+.data-drip-scroller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 80px;
+  width: 30px;
+}
+
+/* Data Drip Animation - Cyberpunk Aesthetic */
+@keyframes drip-leak {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+.drip-pixel {
+  width: 4px;
+  height: 4px;
+  background-color: #FF007F;
+  box-shadow: 0 0 10px #FF007F, 0 0 20px #FF007F, 0 0 30px rgba(255, 0, 127, 0.8);
+  border-radius: 2px;
+  animation: drip-leak 1.8s infinite ease-in-out;
+  filter: drop-shadow(0 0 3px #FF007F);
+}
