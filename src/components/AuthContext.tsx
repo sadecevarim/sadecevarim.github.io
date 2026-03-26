@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     
     // Version control for stories - force update if version changed
-    const currentVersion = '2.3';
+    const currentVersion = '2.4';
     if (savedStories && storiesVersion === currentVersion) {
       setStories(JSON.parse(savedStories));
     } else {
@@ -259,6 +259,52 @@ Ve ben bağırıyorum: SADECE VARIM!`,
           approvedAt: new Date('2024-03-21').toISOString(),
           imageUrl: 'https://images.unsplash.com/photo-1561057160-ce83b1bd72f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmlkZSUyMGNlbGVicmF0aW9uJTIwcGVvcGxlfGVufDF8fHx8MTc2ODAzODkxM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
           mediaType: 'image',
+        },
+        {
+          id: 'story-9',
+          userId: 'sample-user-9',
+          title: 'Gediz Kıyısında Sessiz İsyan',
+          content: `Gediz kenarında yürürken üstümdeki bakışların ağırlığını her adımda hissettim. Aynı sokak, aynı rüzgar, ama her gün başka bir sınav.
+
+Bir akşam köprüye yakın duvarda minik bir yazı gördüm: "Buradayız." O tek kelime içimdeki korkuyu gevşetti. Meğer yalnız değilmişim.
+
+Ertesi hafta üç kişi buluştuk. Birimiz çay getirdi, birimiz not defteri. Konuştuk, sustuk, birbirimize alan açtık. Kimse kimseyi düzeltmeye çalışmadı.
+
+Sonra mahalledeki ifşa ve dedikodu diline karşı kendi dilimizi kurduk. Birbirimize kod kelimelerle haber verdik, riskli saatleri paylaştık, kimseyi tek başına bırakmadık.
+
+Bir lubunya arkadaşım "Aşkım, direniş bazen sadece yan yana durmaktır" dedi. O cümleyle omuzlarım düştü, nefesim açıldı.
+
+Benim isyanım bağırmak değil; silinmeye karşı kalmak. Gediz'e her indiğimde bunu hatırlıyorum:
+
+Sadece varım. Ve bu sokakta birbirimizi var ederek çoğalıyoruz.`,
+          isAnonymous: true,
+          status: 'approved',
+          createdAt: new Date('2024-03-24').toISOString(),
+          approvedAt: new Date('2024-03-24').toISOString(),
+          mediaType: 'text',
+        },
+        {
+          id: 'story-10',
+          userId: 'sample-user-10',
+          title: 'O Sokağın Lambası Altında',
+          content: `O sokağın lambası hep titrer. Işık açılır kapanır, tıpkı bizim görünürlüğümüz gibi.
+
+Bir gece dönüşte iki kişinin fısıltısını duydum. Adımı söylemediler ama beni söylediler. Eve girene kadar elimdeki anahtarı yumruk gibi sıktım.
+
+Ertesi gün aynı sokakta yine yürüdüm. Korkuyla değil, tedbirle. Mahalle grubumuzda saat paylaştık, kim nerede onu yazdık. Küçük bir dayanışma haritası yaptık.
+
+Akşamüstü buluşmada biri "Madilik üretirler, biz de gullumla yarayı kapatırız" dedi. Gülümsedik ama ciddiydik: birbirimizin güvenliği şaka değildi.
+
+Sonra duvara tebeşirle minicik bir cümle yazdık: "Yalnız değilsin." Yağmur silse de biz her hafta yeniden yazdık.
+
+Bu hikaye kahramanlık değil. Bu, sıradan bir direnişin kaydı. O sokağın lambası altında birbirimize omuz verince, karanlık aynı karanlık olmuyor.
+
+Anonimim, evet. Ama sessiz değilim.`,
+          isAnonymous: true,
+          status: 'approved',
+          createdAt: new Date('2024-03-25').toISOString(),
+          approvedAt: new Date('2024-03-25').toISOString(),
+          mediaType: 'text',
         },
       ];
 
