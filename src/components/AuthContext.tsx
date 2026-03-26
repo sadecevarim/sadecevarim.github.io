@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     
     // Version control for stories - force update if version changed
-    const currentVersion = '2.2';
+    const currentVersion = '2.3';
     if (savedStories && storiesVersion === currentVersion) {
       setStories(JSON.parse(savedStories));
     } else {
@@ -124,6 +124,8 @@ Ama ben böyleyim. Hem kadınları hem erkekleri sevebiliyorum. Bu beni kararsı
 
 Queer topluluğunda bile bazen dışlanıyorum. "Yeterince gay değil" diyorlar. Heteroseksüel dünyada ise zaten hep yabancı oldum.
 
+Bir gece Kordon'da bir lubunya arkadaşım kulağıma "Aşkın da kimliğin de spektrum canım, kendini sıkıştırma" dedi. O cümle içime yerleşti. O andan sonra daha çok gullum, daha az korku taşıdım.
+
 Ama artık kimsenin tanımına sığmam gerektiğini düşünmüyorum. Ben bir spektrumum, bir renk paletiymişim. Ve bu güzel.
 
 Aşk aşktır. Ben ben'im. Sadece varım, ve bu yeterince queer.`,
@@ -169,6 +171,8 @@ Zamirler sıkıntılıydı. "O" demeyi öğrenmek kimse için kolay değil ama b
 
 Görünmez olmak zor. Queer olmak ama "yeterince queer" görünmemek. Trans olmak ama "geleneksel trans" anlatılarına uymamak.
 
+Bir gün Alsancak'ta bir lubunya arkadaşım "Canım, etiketten değil kalpten yaşa" dedi. O günden sonra daha az kasıldım; biraz gullum, biraz cesaretle kendime alan açtım.
+
 Ama ben buradayım. Kategorilere sığmayan, etiketlere isyan eden, sadece kendisi olmaya çalışan bir insan.
 
 Sadece varım. Tanımlanamaz ama gerçek.`,
@@ -189,6 +193,8 @@ Sadece varım. Tanımlanamaz ama gerçek.`,
 Annem daha farklıydı. "Seni seviyorum ama bunu anlamıyorum" dedi. Dürüsttü en azından.
 
 Zaman geçti. Yavaş yavaş, adım adım. İlk doğum günümü geçirdik birlikte. Sonra yılbaşını. Sonra sevgilimi tanıştırdım.
+
+İlk tanışma sofrasında kalbim pır pırdı. İçimden "Aman madilik çıkmasın" dedim. Ama gecenin sonunda annem sessizce elimi tuttu; o temas bana bütün cümlelerden daha çok iyi geldi.
 
 Babam hala tam kabullenemedi belki. Ama sofrada yerimiz var. Ailede yerimiz var.
 
@@ -236,6 +242,8 @@ Rengarenk bayraklar, müzik, dans, öpüşen çiftler, el ele tutuşan insanlar.
 Bir an durdum. Etrafa baktım. İşte topluluğum. İşte ailem. İşte ben.
 
 "Love is love" pankartını taşırken ellerim titriyordu. Hem korkudan hem heyecandan. Ama yalnız değildim.
+
+Yanımdaki lubunya "Kız, bugün madilik yok; sadece ışık var" dedi. Bir başkası "Haydi canım, biraz gullum da şart" diye sarıldı. O an kalbimdeki düğüm çözüldü.
 
 Binlerce insan. Binlerce hikaye. Binlerce "sadece varım".
 
@@ -332,7 +340,7 @@ Ve ben bağırıyorum: SADECE VARIM!`,
   };
 
   const getApprovedStories = () => {
-    return stories.filter((story) => story.status === 'approved');
+    return stories.filter((story) => story.status === 'approved' && story.id.startsWith('story-'));
   };
 
   const updateStoryStatus = async (storyId: string, status: 'approved' | 'rejected') => {
